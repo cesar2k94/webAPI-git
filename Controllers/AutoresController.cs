@@ -28,7 +28,7 @@ namespace webAPI.Controllers
         {
             return context.Autores.FirstOrDefault();
         }
-        [HttpGet("{id}", Name= "Obtner Autor")]
+        [HttpGet("{id}", Name= "Obtener Autor")]
         public async Task<ActionResult<Autor>> Get (int id)// el async el Task es para usar prog asincrona
         {
             var autor =  await context.Autores.Include(x=>x.Libros).FirstOrDefaultAsync(x=> x.Id == id);//con el await es para q sea programacion asincrona
