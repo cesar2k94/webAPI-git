@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webAPI.Contexts;
 using webAPI.Entities;
+using webAPI.Services;
 
 namespace webAPI.Controllers
 {
@@ -14,13 +15,17 @@ namespace webAPI.Controllers
     public class AutoresController: ControllerBase
     {
         private readonly ApplicationDbContext context;
-        public AutoresController(ApplicationDbContext context)
+        private readonly IClaseB claseB;
+
+        public AutoresController(ApplicationDbContext context, IClaseB claseB)//AL agregar ICLaseB claseB se esta realizando inyencion de dependencia, de bajo acoplamiento
         {
             this.context = context;
+            this.claseB= claseB;
         }
         [HttpGet]
         public ActionResult<IEnumerable<Autor>> Get()
         {
+            claseB.HacerAlgo();
             return context.Autores.Include(x=>x.Libros).ToList();
         }
         [HttpGet("Primer")]

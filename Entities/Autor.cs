@@ -23,9 +23,10 @@ namespace webAPI.Entities
                 var primeLetra = Nombre[0].ToString();
                 if (primeLetra != primeLetra.ToUpper())
                 {
-                    yield return new ValidationResult("La 1ra letra debe ser mayúscula",new string[] {nameof(Nombre)});//uso yield xq retorno un IEnumerable
+                    yield return new ValidationResult("La 1ra letra debe ser mayúscula",new string[] {nameof(Nombre)});//uso yield xq retorno un elemento de un IEnumerable
                 }                
             }
         }
+        
     }
-}
+} 
