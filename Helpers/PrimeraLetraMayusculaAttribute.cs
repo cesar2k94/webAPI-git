@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace webAPI.Helpers
 {
-    public class PrimeraLetraMayusculaAttribute : ValidationAttribute
+    public class PrimeraLetraMayusculaAttribute : ValidationAttribute //Validacion por ATRIBUTOS
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)//en value esta el valor de la propiedad donde se ha creado el atributo
         {
