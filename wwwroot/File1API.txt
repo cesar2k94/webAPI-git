@@ -1,5 +1,1 @@
-WriteToFileHostedService: Process Started
-WriteToFileHostedService: Process Stopped
-WriteToFileHostedService: Proceso en marcha
-WriteToFileHostedService: Process Stopped
-WriteToFileHostedService: Proceso en marcha
+
