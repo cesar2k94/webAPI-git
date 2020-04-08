@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webAPI.Contexts;
 using webAPI.Entities;
+using webAPI.Helpers;
 using webAPI.Services;
 
 namespace webAPI.Controllers
@@ -23,6 +24,7 @@ namespace webAPI.Controllers
             this.claseB= claseB;
         }
         [HttpGet]
+        [ServiceFilter(typeof(MiFiltrodAccion))]//Aqui pongo como atributo el filtro q creé, tenemos q usar ServiceFilter xq estoy usando inyencion de dependencia,sino no tuviera q ponerlo
         public ActionResult<IEnumerable<Autor>> Get()
         {
             claseB.HacerAlgo();
