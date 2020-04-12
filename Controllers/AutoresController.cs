@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webAPI.Contexts;
 using webAPI.Entities;
 using webAPI.Helpers;
+using webAPI.Models;
 using webAPI.Services;
 
 namespace webAPI.Controllers
@@ -17,11 +19,13 @@ namespace webAPI.Controllers
     {
         private readonly ApplicationDbContext context;
         private readonly IClaseB claseB;
+        private readonly IMapper mapper;
 
-        public AutoresController(ApplicationDbContext context, IClaseB claseB)//AL agregar ICLaseB claseB se esta realizando inyencion de dependencia, de bajo acoplamiento
+        public AutoresController(ApplicationDbContext context, IClaseB claseB, IMapper mapper)//AL agregar ICLaseB claseB se esta realizando inyencion de dependencia, de bajo acoplamiento
         {
             this.context = context;
             this.claseB= claseB;
+            this.mapper= mapper; //al poner IMapper es para poder usar el mapeo
         }
         [HttpGet]
         [ServiceFilter(typeof(MiFiltrodAccion))]//Aqui pongo como atributo el filtro q creé, tenemos q usar ServiceFilter xq estoy usando inyencion de dependencia,sino no tuviera q ponerlo
@@ -29,6 +33,10 @@ namespace webAPI.Controllers
         {
             claseB.HacerAlgo();
             return context.Autores.Include(x=>x.Libros).ToList();
+            /*Si quiero retornar una lista de AutorDTO:
+            var autores= await context.Autores.Include(x=>x.Libros).ToList();
+            var autoresDTO=mapper.Map<List<AutorDTO>>(autores);
+            return autoresDTO;*/
         }
         [HttpGet("Primer")]
         public ActionResult <Autor> GetPrimerAutor()
@@ -36,14 +44,15 @@ namespace webAPI.Controllers
             return context.Autores.FirstOrDefault();
         }
         [HttpGet("{id}", Name= "Obtener Autor")]
-        public async Task<ActionResult<Autor>> Get (int id)// el async el Task es para usar prog asincrona
+        public async Task<ActionResult<AutorDTO>> Get (int id)// el async el Task es para usar prog asincrona
         {
             var autor =  await context.Autores.Include(x=>x.Libros).FirstOrDefaultAsync(x=> x.Id == id);//con el await es para q sea programacion asincrona
             if (autor == null)
             {
                 return NotFound();
             }
-            return autor;
+            var autorDTO = mapper.Map<AutorDTO>(autor);// Se mapea autor a un tipo autorDTO
+            return autorDTO;//se muestran los datos de la clase AutorDTO
         }
         [HttpPost]
         public ActionResult Post([FromBody] Autor autor)//se recibe un autor del cliente y se incorpora a la BD, ese autor viene en el cuerpo de la peticion http por eso se pone FromBody

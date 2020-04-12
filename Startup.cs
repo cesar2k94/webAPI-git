@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,7 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using webAPI.Contexts;
+using webAPI.Entities;
 using webAPI.Helpers;
+using webAPI.Models;
 using webAPI.Services;
 
 namespace webAPI
@@ -30,6 +33,10 @@ namespace webAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper( Configuration => //este servicio se usa para configurar el mapeo, primero hay q agregar el paquete AutoMapper.Extensions.Microsoft.DependencyInjection
+            {
+                Configuration.CreateMap<Autor, AutorDTO>();//Autor sería la fuente y AutorDTO el destino, los datos de Autor se mapean en AutorDTO, para eso tienen q tener el mismo nombre las variables en la fuente y en el destino 
+            },typeof(Startup));
             services.AddTransient<IHostedService, WriteToFileHostedService>();//la inyeccion de dependencia en la clase WriteToFileHostedSeervice
             services.AddScoped<MiFiltrodAccion>();//Habilitamos el Filtro q creé
             services.AddResponseCaching();//Habilitamos un conjunto de servicios para la funcionabilidad de guardar en CACHE//Filtros
