@@ -29,10 +29,15 @@ namespace webAPI.Controllers
         }
         [HttpGet]
         [ServiceFilter(typeof(MiFiltrodAccion))]//Aqui pongo como atributo el filtro q creé, tenemos q usar ServiceFilter xq estoy usando inyencion de dependencia,sino no tuviera q ponerlo
-        public ActionResult<IEnumerable<Autor>> Get()
+        public async Task<ActionResult<IEnumerable<Autor>>> Get()
         {
             claseB.HacerAlgo();
-            return context.Autores.Include(x=>x.Libros).ToList();
+            var task = context.Autores.Include(x => x.Libros).ToListAsync();
+            var task2 = context.Libros.ToListAsync();
+            await Task.WhenAll(task, task2);//esperon q esten las dos tareas lad elibros y autores
+            var autores = task.Result;//Obtengo el resultado de la tarea
+            var libros = await task2;//Otra manera de obtener el resultado de la tarea
+            return autores;
             /*Si quiero retornar una lista de AutorDTO:
             var autores= await context.Autores.Include(x=>x.Libros).ToList();
             var autoresDTO=mapper.Map<List<AutorDTO>>(autores);
