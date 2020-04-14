@@ -9,6 +9,6 @@ namespace webAPI.Models
     {
         public int Id {get;set;}
         public string Titulo{get;set;}
-        public int AutorID {get;set;}
+        public int AutorId {get;set;}
     }
 }

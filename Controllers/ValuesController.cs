@@ -7,7 +7,7 @@ namespace webAPI.Controllers
     {
         // GET api/values
         [HttpGet]
-        [ResponseCache(Duration=15)]//Filtro guardar en CACHE durante 15 segundos, los filtros se colocan como atributos
+       // [ResponseCache(Duration=15)]//Filtro guardar en CACHE durante 15 segundos, los filtros se colocan como atributos
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };

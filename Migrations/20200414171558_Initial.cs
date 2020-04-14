@@ -2,17 +2,23 @@
 
 namespace webAPI.Migrations
 {
-    public partial class Libros : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Nombre",
-                table: "Autores",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
+            migrationBuilder.CreateTable(
+                name: "Autores",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(maxLength: 10, nullable: false),
+                    Identification = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Autores", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Libros",
@@ -45,12 +51,8 @@ namespace webAPI.Migrations
             migrationBuilder.DropTable(
                 name: "Libros");
 
-            migrationBuilder.AlterColumn<string>(
-                name: "Nombre",
-                table: "Autores",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string));
+            migrationBuilder.DropTable(
+                name: "Autores");
         }
     }
 }
