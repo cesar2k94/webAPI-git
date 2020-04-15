@@ -17,7 +17,7 @@ namespace webAPI.Entities
         public List<libros> Libros{get; set;}
 
         public string Identification {get; set;}
-       // public DateTime FechaNacimiento {get; set;}
+       public DateTime FechaNacimiento {get; set;}
         //public List<libros> Books {get;set;}    
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)//Validacion por modelos, en este caso ya uso la validacion por atributos(PrimeraLetraMayuscula) pero realice la validacion por modelos en modo de prueba
         {

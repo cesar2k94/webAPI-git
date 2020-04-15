@@ -43,7 +43,7 @@ namespace webAPI.Controllers
         {
             return context.Autores.FirstOrDefault();
         }
-        [HttpGet("{id}", Name= "Obtener Autor")]
+        [HttpGet("{id}", Name= "ObtenerAutor")]//con Name le pongo un nombre a la regla de routeo
         public async Task<ActionResult<AutorDTO>> Get (int id)// el async el Task es para usar prog asincrona
         {
             var autor =  await context.Autores.Include(x=>x.Libros).FirstOrDefaultAsync(x=> x.Id == id);//con el await es para q sea programacion asincrona
@@ -61,11 +61,13 @@ namespace webAPI.Controllers
             };//se muestran los datos de la clase AutorDTO*/
         }
         [HttpPost]
-        public ActionResult Post([FromBody] Autor autor)//se recibe un autor del cliente y se incorpora a la BD, ese autor viene en el cuerpo de la peticion http por eso se pone FromBody
+        public async Task<ActionResult> Post([FromBody] AutorCreacionDTO autorCreacion)//se recibe un autor del cliente y se incorpora a la BD, ese autor viene en el cuerpo de la peticion http por eso se pone FromBody
         {
-            context.Autores.Add(autor);//se agrega autor en la BD
-            //context.SaveChanges();
-            return new CreatedAtRouteResult("Obtener Autor", new {id = autor.Id},autor);//primero se pone la ruta donde el cliente va localizar el recurso, despues se pone los parametros de la accion y espues se pone en el cuerpo de la rspuesta autor  
+            var autor =  mapper.Map<Autor>(autorCreacion);
+            context.Add(autor);//se agrega autor en la BD
+            await context.SaveChangesAsync();
+            var autorDTO = mapper.Map<AutorDTO>(autor);
+            return new CreatedAtRouteResult("ObtenerAutor", new {id = autor.Id},autorDTO);//primero se pone la ruta donde el cliente va localizar el recurso, despues se pone los parametros de la accion y espues se pone en el cuerpo de la rspuesta autor  
         }
         [HttpPut("{id}")]//el Put es para actualizar le recurso de autor
         public ActionResult Put(int id, [FromBody] Autor value)

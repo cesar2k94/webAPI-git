@@ -8,7 +8,6 @@ C:\cesar\webAPI\bin\Debug\netcoreapp3.1\webAPI.runtimeconfig.dev.json
 C:\cesar\webAPI\bin\Debug\netcoreapp3.1\webAPI.dll
 C:\cesar\webAPI\bin\Debug\netcoreapp3.1\webAPI.pdb
 C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.csprojAssemblyReference.cache
-C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.MvcApplicationPartsAssemblyInfo.cache
 C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.AssemblyInfoInputs.cache
 C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.AssemblyInfo.cs
 C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.RazorTargetAssemblyInfo.cache
@@ -54,5 +53,8 @@ C:\cesar\webAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
 C:\cesar\webAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\cesar\webAPI\bin\Debug\netcoreapp3.1\AutoMapper.dll
 C:\cesar\webAPI\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
-C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.csproj.CoreCompileInputs.cache
 C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.genruntimeconfig.cache
+C:\cesar\webAPI\bin\Debug\netcoreapp3.1\Microsoft.DotNet.PlatformAbstractions.dll
+C:\cesar\webAPI\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyModel.dll
+C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.csproj.CoreCompileInputs.cache
+C:\cesar\webAPI\obj\Debug\netcoreapp3.1\webAPI.MvcApplicationPartsAssemblyInfo.cache

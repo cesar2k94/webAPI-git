@@ -11,7 +11,7 @@ namespace webAPI.Models
         public int Id {get; set;}
         [Required]
         public string Nombre {get; set;}
-       // public DateTime FechaNacimiento {get;set;}
+        public DateTime FechaNacimiento { get; set; }
         public List<LibroDTO>Libros{get; set;}
        // public List<LibroDTO> Books {get;set;}
 
