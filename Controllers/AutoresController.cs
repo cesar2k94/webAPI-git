@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webAPI.Contexts;
@@ -78,6 +79,35 @@ namespace webAPI.Controllers
             context.SaveChanges();
             return Ok();
         }
+
+        [HttpPatch("{id}")]//el Patch para actualizaciones parciales del recurso autor 
+        public async Task<ActionResult> Patch(int id, [FromBody]JsonPatchDocument<AutorCreacionDTO> patchDocument)//se pone JsonPatchDocument xq en el curpo de la peticion se reciben varias operaciones
+        {
+            if(patchDocument==null)
+            {
+                return BadRequest();
+            }
+            var autorDeLaBD = await context.Autores.FirstOrDefaultAsync(x => x.Id == id);//Buscando autor de la BD
+            if(autorDeLaBD==null)
+            {
+                return NotFound();
+            }
+
+            var autorDTO = mapper.Map<AutorCreacionDTO>(autorDeLaBD);
+            patchDocument.ApplyTo(autorDTO, ModelState);//Se pasa ModelState para saber si el modelo es valido. Esta linea de codigo se usa para aplicar las operaciones q hemos recibido al autor De la Base de datos
+
+            mapper.Map(autorDTO, autorDeLaBD);
+
+            var IsValid = TryValidateModel(autorDeLaBD);
+            if(!IsValid)//para ver si el modelo es valido
+            {
+                return BadRequest(ModelState);//EN el ModelState se guardan los errores de validacion
+            }
+
+            await context.SaveChangesAsync();
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public ActionResult<Autor> Delete(int id)
         {

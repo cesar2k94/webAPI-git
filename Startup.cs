@@ -36,17 +36,24 @@ namespace webAPI
             services.AddAutoMapper(configuration => //este servicio se usa para configurar el mapeo, primero hay q agregar el paquete AutoMapper.Extensions.Microsoft.DependencyInjection
             {
                 configuration.CreateMap<Autor, AutorDTO>();
-                configuration.CreateMap<AutorCreacionDTO, Autor>();//Autor sería la fuente y AutorDTO el destino, los datos de Autor se mapean en AutorDTO, para eso tienen q tener el mismo nombre las variables en la fuente y en el destino 
+                configuration.CreateMap<AutorCreacionDTO, Autor>().ReverseMap();//Autor sería la fuente y AutorDTO el destino, los datos de Autor se mapean en AutorDTO, para eso tienen q tener el mismo nombre las variables en la fuente y en el destino. Se pone ReverseMAp para q a la inversa se pueda hacer tambien
             }, typeof(Startup));
+
             services.AddTransient<IHostedService, WriteToFileHostedService>();//la inyeccion de dependencia en la clase WriteToFileHostedSeervice
+            
             services.AddScoped<MiFiltrodAccion>();//Habilitamos el Filtro q creé
+            
             services.AddResponseCaching();//Habilitamos un conjunto de servicios para la funcionabilidad de guardar en CACHE//Filtros
+            
             services.AddTransient<IClaseB, ClaseB>();//Para configurar la relacion de dependencia, configurar servicios, la interfaz está implementada como está en claseB
+            
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddControllers()
             .AddNewtonsoftJson(options =>
             options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            
             //Esto es necesario para permitir las relaciones ciclicas entre clases
             services.AddMvc(Options => Options.Filters.Add(new MiFiltrodExcepcion()));//Aqui se ponen los filtros globales
                                                                                       //Si tuviera inyeccion de dependencia se pone:
