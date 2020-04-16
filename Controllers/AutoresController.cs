@@ -70,13 +70,11 @@ namespace webAPI.Controllers
             return new CreatedAtRouteResult("ObtenerAutor", new {id = autor.Id},autorDTO);//primero se pone la ruta donde el cliente va localizar el recurso, despues se pone los parametros de la accion y espues se pone en el cuerpo de la rspuesta autor  
         }
         [HttpPut("{id}")]//el Put es para actualizar le recurso de autor
-        public ActionResult Put(int id, [FromBody] Autor value)
+        public ActionResult Put(int id, [FromBody] AutorCreacionDTO valueactualizacion)
         {
-            if (id!=value.Id)
-            {
-                return BadRequest();
-            }
-            context.Entry(value).State= EntityState.Modified;// se actualiza el registro
+            var autor = mapper.Map<Autor>(valueactualizacion);
+            autor.Id = id;
+            context.Entry(autor).State= EntityState.Modified;// se actualiza el registro
             context.SaveChanges();
             return Ok();
         }
