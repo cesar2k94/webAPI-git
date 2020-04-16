@@ -109,16 +109,16 @@ namespace webAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult<Autor> Delete(int id)
+        public async Task<ActionResult<Autor>> Delete (int id)
         {
-            var autor= context.Autores.FirstOrDefault(x=>x.Id==id);
-            if (autor == null)
+            var autorId = await context.Autores.Select(x=>x.Id).FirstOrDefaultAsync(x=>x==id);//con Select selecciono las columnas en la tabla q quiero leer
+            if (autorId == default(int))//por si no existe el autor con ese id
             {
                 return NotFound();
             }
-            context.Autores.Remove(autor);
-            context.SaveChanges();
-            return autor;
+            context.Remove(new Autor {Id = autorId });//se borra el autor q tenga ese ID
+            await context.SaveChangesAsync();
+            return Ok(autorId);
         }
     }
 }
